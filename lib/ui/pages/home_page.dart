@@ -18,7 +18,13 @@ class _HomePageState extends State<HomePage> {
     return Placeholder(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Etanol x Gasolina'),
+          title: const Row(
+            children: [
+              Icon(Icons.calculate_outlined, color: Colors.white,),
+              SizedBox(width: 8),
+              Text('Etanol x Gasolina', style: TextStyle(color: Colors.white),),
+            ],
+          ),
           backgroundColor: Colors.blueAccent.shade200
         ),
         body: Column(
@@ -26,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CampoTexto(gasolinaController,'Gasolina', 'R\$'),
-            ampoTexto(etanolController,'Etanol', 'R\$'),
+            CampoTexto(etanolController,'Etanol', 'R\$'),
             ElevatedButton(onPressed: calcular, child: const Text("Calcular"))
           ]
         ),
