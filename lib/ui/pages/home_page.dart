@@ -1,3 +1,4 @@
+import 'package:aula02/bloc/calcular_combustivel_block.dart';
 import 'package:aula02/ui/widgets/campo_texto.dart';
 import 'package:flutter/material.dart';
 
@@ -9,16 +10,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  final TextEditingController gasolinaController = TextEditingController();
-  final TextEditingController etanolController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    var calcBloc = CalcularCombustivelBloc(context);
     return Placeholder(
       child: Scaffold(
         appBar: AppBar(
           title: const Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.calculate_outlined, color: Colors.white,),
               SizedBox(width: 8),
@@ -27,28 +26,36 @@ class _HomePageState extends State<HomePage> {
           ),
           backgroundColor: Colors.blueAccent.shade200
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            setState(() {
+              calcBloc.calcular();
+            });
+          },
+          backgroundColor: Colors.blue,
+          child: const Icon(Icons.local_gas_station, color: Colors.white,),
+        ),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CampoTexto(gasolinaController,'Gasolina', 'R\$'),
-            CampoTexto(etanolController,'Etanol', 'R\$'),
-            ElevatedButton(onPressed: calcular, child: const Text("Calcular"))
+            CampoTexto(calcBloc.gasolinaController,'Gasolina', 'R\$'),
+            CampoTexto(calcBloc.etanolController,'Etanol', 'R\$'),
+            ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    calcBloc.calcular();
+                  });
+                },
+                child: const Text("Calcular")
+            ),
+            Text(calcBloc.resultado, style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold))
           ]
         ),
       ),
     );
   }
 
-  void calcular() {
-    final valorGasolina = double.parse(gasolinaController.text);
-    final valorEtanol = double.parse(etanolController.text);
 
-    if(valorEtanol <= (valorGasolina * 0.7)){
-      //etanol
-    }
-      //Gasolina melhor
-
-  }
 
 }
